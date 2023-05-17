@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.skylink.gympro.model.UserType;
 
 @Getter
 @Setter
@@ -13,6 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class User {
 
@@ -26,6 +29,8 @@ public class User {
     private String phoneNo;
     @Column(name = "is_deleted")
     private boolean deleted = false; // default value is false
+
+
     @Enumerated(EnumType.STRING)
     private UserType type;
 
@@ -36,9 +41,11 @@ public class User {
     public boolean isDeleted() {
         return this.deleted;
     }
+
+    public User(int userId) {
+        this.userId = userId;
+    }
+
+
 }
 
-enum UserType {
-    CUSTOMER,
-    ADMIN
-}

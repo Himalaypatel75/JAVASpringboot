@@ -1,6 +1,7 @@
 package com.skylink.gympro.controller;
 
 import com.skylink.gympro.model.User;
+import com.skylink.gympro.model.dto.UserDTO;
 import com.skylink.gympro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,24 +17,26 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllRole(){
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
         return ResponseEntity.ok(this.userService.getAllUser());
     }
 
     @PostMapping("/create-users")
-    public ResponseEntity<User>  createUser(@RequestBody User user){
-        return ResponseEntity.ok(this.userService.createUser(user));
+    public ResponseEntity<UserDTO>  createUser(@RequestBody UserDTO userDTO){
+        return ResponseEntity.ok(this.userService.createUser(userDTO));
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable long id){
         return ResponseEntity.ok(this.userService.getUserById(id));
     }
 
     @PatchMapping("/update/users/{id}")
-    public ResponseEntity<User> updateUserById(@PathVariable long id , @RequestBody @NotNull User user){
-        user.setUserId(id);
-        return ResponseEntity.ok(this.userService.updateUser(user));
+    public ResponseEntity<UserDTO> updateUserById(@PathVariable long id , @RequestBody @NotNull UserDTO userDTO){
+//        System.out.println(userDTO + "dfdfd" + id);
+        userDTO.setUserId(id);
+//        System.out.println(userDTO + " this is object1");
+        return ResponseEntity.ok(this.userService.updateUser(userDTO));
     }
 
     @DeleteMapping("/delete/users/{id}")
